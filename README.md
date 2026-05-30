@@ -8,7 +8,20 @@ Leveraging large language models through a command-line interface allows for:
 - **Git Intelligence:** Automated branch management, merging, and remote synchronization.
 - **Infrastructure Scaling:** Programmatic control over multi-node lab environments.
 
----
+## 🧠 Session Management Utility
+
+To quickly regain context from past sessions and save tokens, use the included search utility:
+
+### 🔎 Search Chat History
+1. Make the script executable:
+   ```bash
+   chmod +x search_chats.sh
+   ```
+2. Search for keywords in your history:
+   ```bash
+   ./search_chats.sh "Python"
+   ```
+   *This script searches all `.jsonl` files in `/home/dina/.gemini/tmp/dina/chats/` for the provided keyword.*
 
 ## 🛠️ Installation & Setup
 
@@ -42,8 +55,6 @@ npm install -g @google/gemini-cli
 [System.Environment]::SetEnvironmentVariable('GEMINI_API_KEY', 'your_api_key_here', 'User')
 ```
 
----
-
 ## 🔑 Secure SSH Connection
 
 Connecting to GitHub via SSH is the most secure method for automation.
@@ -74,8 +85,6 @@ ssh -T git@github.com
 - **NEVER** push your `.env` files containing API keys.
 - **Always** use a `.gitignore` file.
   - *Example:* `echo "id_ed25519" >> .gitignore`
-
----
 
 ## 🔄 Workflow in Action
 1. **Initialize:** Start a session with Gemini CLI.
