@@ -1,104 +1,66 @@
-# 🤖 AI-Driven Workflow Automation
+# ⚡ Infrastructure Orchestration & Automation
 
-This repository documents the automation of development and documentation workflows using **Gemini CLI**. It serves as a guide for setting up an autonomous environment where AI agents handle repository management, technical documentation, and synchronization tasks.
+This repository contains scripts and configuration workflows designed to automate the management, documentation, and synchronization of distributed laboratory environments and project repositories.
 
 ## 🚀 Overview
-Leveraging large language models through a command-line interface allows for:
-- **Autonomous Documentation:** Creating structured writeups for CTFs and projects.
-- **Git Intelligence:** Automated branch management, merging, and remote synchronization.
-- **Infrastructure Scaling:** Programmatic control over multi-node lab environments.
+By implementing structured automation, I have standardized:
+- **Project Organization:** Automated directory structure creation for consistent lab and CTF documentation.
+- **Git Orchestration:** Streamlined processes for repository initialization, branching, and remote synchronization.
+- **Documentation Standards:** Automated generation of professional README structures and technical writeups.
 
-## 🧠 Design Philosophy
-
-This workflow is more than just automation; it represents a shift from file-centric editing to **system-centric orchestration**.
-
-- **Consistent Ecosystem:** Documentation remains unified across all 19+ repositories.
-- **Accelerated Execution:** Automates tedious tasks like repository creation, README generation, and commit standardization.
-- **System Thinking:** Forces the design of reproducible workflows, treating the entire laboratory and project portfolio as a single, maintainable system rather than a collection of isolated files.
-
-## 🧠 Session Management Utility
-
-To quickly regain context from past sessions and save tokens, use the included search utility:
-
-### 🔎 Search Chat History
-1. Make the script executable:
-   ```bash
-   chmod +x search_chats.sh
-   ```
-2. Search for keywords in your history:
-   ```bash
-   ./search_chats.sh "Python"
-   ```
-   *This script searches all `.jsonl` files in `/home/dina/.gemini/tmp/dina/chats/` for the provided keyword.*
+---
 
 ## 🛠️ Installation & Setup
 
 ### Requirements
 - **Node.js:** v18.0.0 or higher
 - **Git:** Latest version
-- **API Key:** A valid Google Gemini API Key
 
 ### 🐧 Linux Installation
 ```bash
-# Install Gemini CLI globally
-npm install -g @google/gemini-cli
-
-# Configure your API key
-echo "export GEMINI_API_KEY='your_api_key_here'" >> ~/.bashrc
-source ~/.bashrc
-
 # Verify installation
-gemini --version
+git --version
+node --version
 ```
 
 ### 🪟 Windows Installation
 **Option A: WSL (Recommended)**
-Follow the Linux installation steps within your Ubuntu/WSL terminal.
+Use standard Linux CLI tools.
 
 **Option B: PowerShell**
 1. Install [Node.js](https://nodejs.org/).
-2. Run in PowerShell:
-```powershell
-npm install -g @google/gemini-cli
-[System.Environment]::SetEnvironmentVariable('GEMINI_API_KEY', 'your_api_key_here', 'User')
-```
+2. Ensure `git` and `npm` are in your system PATH.
+
+---
 
 ## 🔑 Secure SSH Connection
 
-Connecting to GitHub via SSH is the most secure method for automation.
+Connecting to GitHub via SSH is the standard for secure repository management.
 
 ### 1. Generate SSH Key
-Use the Ed25519 algorithm for maximum security and performance:
 ```bash
 ssh-keygen -t ed25519 -C "your_email@example.com"
 ```
-*When prompted for a file, press Enter to use the default (`~/.ssh/id_ed25519`).*
 
 ### 2. Add Key to GitHub
-Copy your public key:
-```bash
-cat ~/.ssh/id_ed25519.pub
-```
-1. Go to **GitHub Settings** -> **SSH and GPG keys**.
-2. Click **New SSH key** and paste your public key.
+1. Copy your public key: `cat ~/.ssh/id_ed25519.pub`
+2. Add to **GitHub Settings** -> **SSH and GPG keys**.
 
 ### 3. Verify Connection
 ```bash
 ssh -T git@github.com
-# Expected: Hi username! You've successfully authenticated...
 ```
 
 ### 🛡️ Security Best Practices
-- **NEVER** commit your private key (`id_ed25519`).
-- **NEVER** push your `.env` files containing API keys.
-- **Always** use a `.gitignore` file.
-  - *Example:* `echo "id_ed25519" >> .gitignore`
-
-## 🔄 Workflow in Action
-1. **Initialize:** Start a session with Gemini CLI.
-2. **Instruction:** Provide a goal (e.g., "Document my Root-Me challenges").
-3. **Execution:** The AI agent analyzes the filesystem, creates directories, and drafts content.
-4. **Synchronization:** The AI performs `git add`, `commit`, and `push` to keep the remote repository updated.
+- **NEVER** expose private keys (`id_ed25519`).
+- **Use .gitignore** to explicitly exclude sensitive files (API keys, `.env`, credentials).
 
 ---
-*Driven by Dina's Sovereign AI Lab.*
+
+## 🔄 Workflow in Action
+1. **Repository Initialization:** Automated setup of structured directories and initial Git configuration.
+2. **Documentation Generation:** Standardized Markdown generation for project consistency.
+3. **Synchronization:** Standardized Git commands for reliable updates to remote repositories.
+
+---
+*Orchestrating resilient, sovereign infrastructure - Dina.*
