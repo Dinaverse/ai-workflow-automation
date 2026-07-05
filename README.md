@@ -98,314 +98,201 @@ node git-workflow.js \
   --action sync \
   --repo Dinaverse/infrastructure \
   --branch main \
-  --pull-latest
+  --verify-integrity
 ```
 
 ---
 
-## 📋 Workflows
-
-### Workflow 1: Create New Repository
-
-```bash
-# Initialize new project with documentation
-node repo-orchestrator.js create \
-  --repo-name sovereign-ai-research \
-  --template ai-infrastructure \
-  --generate-docs \
-  --setup-ci
-
-# Result:
-# ✅ Repository created
-# ✅ Directory structure initialized
-# ✅ README.md generated
-# ✅ GitHub Actions configured
-# ✅ Initial commit pushed
-```
-
-### Workflow 2: Auto-Document Existing Project
-
-```bash
-# Analyze project and generate documentation
-node doc-generator.js \
-  --source ~/projects/cybersecurity-lab \
-  --comprehensive \
-  --include-examples
-
-# Result:
-# ✅ README.md created
-# ✅ API documentation generated
-# ✅ Deployment guide created
-# ✅ Troubleshooting guide generated
-# ✅ Files committed and pushed
-```
-
-### Workflow 3: Sync Repository Across Nodes
-
-```bash
-# Synchronize repository across lab nodes
-node git-workflow.js sync-distributed \
-  --repo sovereign-ai-infrastructure \
-  --nodes arch-gpu,kali-master,dell-gateway
-
-# Result:
-# ✅ Pull latest from main
-# ✅ Sync to arch-gpu
-# ✅ Sync to kali-master
-# ✅ Sync to dell-gateway
-# ✅ Verify consistency
-```
-
----
-
-## 🛠️ Installation & Setup
-
-### Prerequisites
-
-- **Node.js** v18.0.0 or higher
-- **Git** latest version
-- **Gemini CLI** configured with API key
-- **GitHub SSH access** configured
-
-### Installation
-
-```bash
-# Clone repository
-git clone https://github.com/Dinaverse/ai-workflow-automation
-cd ai-workflow-automation
-
-# Install dependencies
-npm install
-
-# Configure Gemini CLI
-export GEMINI_API_KEY=your_api_key_here
-
-# Verify setup
-npm run test
-```
-
-### Configuration
-
-Create `.env` file:
-
-```bash
-# Gemini Configuration
-GEMINI_API_KEY=your_key_here
-GEMINI_MODEL=gemini-pro
-
-# GitHub Configuration
-GITHUB_TOKEN=ghp_your_token_here
-GITHUB_USER=Dinaverse
-
-# Repository Configuration
-DEFAULT_TEMPLATE=infrastructure
-DEFAULT_LICENSE=MIT
-
-# Automation Settings
-AUTO_COMMIT_MESSAGE=true
-AUTO_PUSH=true
-VERIFY_BEFORE_PUSH=true
-```
-
----
-
-## 🔐 Security & Best Practices
-
-### SSH Configuration
-
-```bash
-# Use SSH for Git operations
-git config --global url."git@github.com:".insteadOf "https://github.com/"
-
-# Verify SSH connection
-ssh -T git@github.com
-```
-
-### API Key Management
-
-```bash
-# Store API keys securely
-export GEMINI_API_KEY=$(cat ~/.ssh/gemini-api-key)
-
-# Never commit secrets
-echo ".env" >> .gitignore
-echo "*.key" >> .gitignore
-```
-
-### Credential Storage
-
-```bash
-# Use OS keychain for credentials
-npm install keytar
-
-# Store credentials securely
-node -e "require('keytar').setPassword('ai-automation', 'github-token', 'ghp_xxx')"
-```
-
----
-
-## 📁 Directory Structure
+## 📂 Repository Structure
 
 ```
 ai-workflow-automation/
 ├── README.md                          (this file)
-├── package.json                       Node dependencies
-├── .env.example                       Environment template
-├── src/
+├── lib/
 │   ├── repo-orchestrator.js          Repository management
 │   ├── doc-generator.js              Documentation automation
-│   ├── gemini-bridge.js              Gemini CLI interface
+│   ├── gemini-bridge.js              Gemini AI interface
 │   ├── git-workflow.js               Git operations
 │   └── utils/
 │       ├── logger.js                 Logging utilities
-│       ├── config.js                 Configuration loader
+│       ├── error-handler.js          Error handling
 │       └── validators.js             Input validation
 ├── templates/
-│   ├── infrastructure/               Infrastructure projects
-│   ├── ai-security/                  Security projects
-│   ├── networking/                   Networking projects
-│   └── documentation/                Pure documentation
+│   ├── infrastructure/               Infrastructure project template
+│   ├── documentation/                Documentation project template
+│   └── security/                     Security automation template
 ├── examples/
-│   ├── create-repo.js                Repository creation example
-│   ├── generate-docs.js              Documentation example
-│   └── workflow-automation.js        Workflow automation example
-├── tests/
-│   ├── repo-orchestrator.test.js
-│   ├── doc-generator.test.js
-│   └── gemini-bridge.test.js
-└── docs/
-    ├── INSTALLATION.md               Setup instructions
-    ├── USAGE_GUIDE.md                How to use
-    ├── API_REFERENCE.md              API documentation
-    └── EXAMPLES.md                   Usage examples
+│   ├── create-repo.sh                Create new repo example
+│   ├── generate-docs.sh              Generate documentation example
+│   └── sync-infrastructure.sh        Sync infrastructure example
+├── config/
+│   ├── defaults.json                 Default configurations
+│   └── gemini-config.json            Gemini CLI settings
+└── tests/
+    ├── repo-orchestrator.test.js
+    ├── doc-generator.test.js
+    └── git-workflow.test.js
 ```
+
+---
+
+## ⚙️ Configuration
+
+### Environment Variables
+
+```bash
+# Gemini CLI Authentication
+GEMINI_API_KEY=your-api-key
+GEMINI_MODEL=gemini-2.0-flash
+
+# Git Configuration
+GIT_USER_NAME=Dina
+GIT_USER_EMAIL=96961723+Dinaverse@users.noreply.github.com
+GH_TOKEN=your-github-token
+
+# Logging
+LOG_LEVEL=info
+LOG_FILE=./logs/automation.log
+```
+
+### Configuration File (`config/defaults.json`)
+
+```json
+{
+  "repositories": {
+    "owner": "Dinaverse",
+    "default_branch": "main",
+    "protected_branches": ["main", "develop"]
+  },
+  "documentation": {
+    "style": "professional",
+    "include_examples": true,
+    "include_architecture": true
+  },
+  "git": {
+    "auto_commit": true,
+    "commit_message_style": "conventional",
+    "push_verify": true
+  },
+  "gemini": {
+    "model": "gemini-2.0-flash",
+    "temperature": 0.7,
+    "max_tokens": 4096
+  }
+}
+```
+
+---
+
+## 🔗 Integration Points
+
+This automation framework integrates with:
+
+| System | Purpose | Integration |
+|--------|---------|-------------|
+| **Gemini CLI** | AI analysis & generation | Direct API calls |
+| **GitHub API** | Repository management | Octokit SDK |
+| **Docker** | Container orchestration | Docker Compose templates |
+| **n8n** | Workflow automation | Webhook triggers |
+| **Sovereign Lab** | Infrastructure management | Direct SSH execution |
 
 ---
 
 ## 📖 Usage Examples
 
-### Example 1: Create Infrastructure Project
+### Create a New Infrastructure Repository
 
 ```bash
-npm run create-project -- \
-  --name my-infrastructure \
-  --type infrastructure \
-  --description "Distributed computing lab" \
-  --generate-docs
+node lib/repo-orchestrator.js \
+  --action create \
+  --repo-name sovereign-new-project \
+  --template infrastructure \
+  --description "New sovereign infrastructure component" \
+  --auto-init
 ```
 
-### Example 2: Generate Documentation for Existing Project
+### Generate Documentation for Existing Project
 
 ```bash
-npm run document -- \
-  --source ~/projects/my-project \
-  --comprehensive \
-  --include-deployment \
-  --include-architecture
+node lib/doc-generator.js \
+  --source /home/dina/projects/my-project \
+  --output README.md \
+  --style professional \
+  --include-deployment-guide \
+  --include-architecture-diagram
 ```
 
-### Example 3: Sync Repositories Across Nodes
+### Analyze Repository and Get Improvements
 
 ```bash
-npm run sync-distributed -- \
-  --repos "sovereign-ai-infrastructure,cybersecurity-lab" \
-  --nodes "arch-gpu,kali-master" \
-  --verify-consistency
+node lib/gemini-bridge.js \
+  --prompt "Analyze this repository structure and suggest improvements for security and performance" \
+  --input /path/to/repo \
+  --output analysis.md \
+  --focus security,performance
+```
+
+### Sync Multiple Repositories
+
+```bash
+node lib/git-workflow.js \
+  --action sync-multiple \
+  --repos-file repos-list.txt \
+  --branch main \
+  --verify-integrity \
+  --auto-resolve-conflicts
 ```
 
 ---
 
-## 🔌 Integration with Lab
+## 🛡️ Security
 
-This automation integrates with:
-
-| Service | Integration | Purpose |
-|---------|-----------|---------|
-| **Gemini CLI** | Direct API | AI-powered analysis & generation |
-| **GitHub API** | REST calls | Repository management |
-| **n8n** | Webhook receiver | Workflow triggers |
-| **Kali-Master** | SSH execution | Distributed automation |
+- **API Keys:** Stored in environment variables, never committed
+- **Git Tokens:** Rotated regularly via GitHub Settings
+- **SSH Keys:** Passphrase-protected, used for secure Git operations
+- **Audit Logging:** All operations logged with timestamps and actor information
 
 ---
 
-## 🔗 Related Repositories
+## 🔄 Workflow Examples
+
+### Automated Weekly Sync
+
+```bash
+# Runs every Sunday at 2 AM via cron
+0 2 * * 0 /usr/bin/node /opt/ai-workflow-automation/lib/git-workflow.js \
+  --action sync-all-repos \
+  --branch main \
+  --verify-integrity
+```
+
+### Documentation Auto-Generation on Release
+
+```bash
+# Triggered by GitHub Actions on release tag
+node lib/doc-generator.js \
+  --source . \
+  --output README.md \
+  --style professional \
+  --include-changelog \
+  --version ${{ github.ref }}
+```
+
+---
+
+## 🤝 Related Projects
 
 | Repository | Purpose |
 |------------|---------|
-| **[Dinaverse](https://github.com/Dinaverse/Dinaverse)** | Master README |
-| **[sovereign-ai-infrastructure](https://github.com/Dinaverse/sovereign-ai-infrastructure)** | Lab architecture |
-| **[n8n-automation-hub](https://github.com/Dinaverse/n8n-automation-hub)** | Workflow orchestration |
-| **[sovereign-ai-skills](https://github.com/Dinaverse/sovereign-ai-skills)** | AI agent skills |
+| [Dinaverse](https://github.com/Dinaverse/Dinaverse) | Master landing page & portfolio |
+| [sovereign-ai-infrastructure](https://github.com/Dinaverse/sovereign-ai-infrastructure) | Infrastructure documentation |
+| [n8n-automation-hub](https://github.com/Dinaverse/n8n-automation-hub) | Workflow definitions |
+| [cybersecurity-lab-automation](https://github.com/Dinaverse/cybersecurity-lab-automation) | Security automation |
 
 ---
 
-## ✅ Operational Status
+## 📝 License & Attribution
 
-| Component | Status | Last Updated |
-|-----------|--------|---|
-| Repository Orchestrator | ✅ Active | 2026-07-05 |
-| Documentation Generator | ✅ Active | 2026-07-05 |
-| Gemini CLI Bridge | ✅ Connected | 2026-07-05 |
-| Git Workflow Manager | ✅ Active | 2026-07-05 |
-| Automated Tests | ✅ Passing | 2026-07-05 |
+This automation framework is part of the Dinaverse sovereign lab ecosystem.
 
----
-
-## 📖 Documentation
-
-| Document | Purpose |
-|----------|---------|
-| **[Installation Guide](docs/INSTALLATION.md)** | Setup instructions |
-| **[Usage Guide](docs/USAGE_GUIDE.md)** | How to use each tool |
-| **[API Reference](docs/API_REFERENCE.md)** | Complete API docs |
-| **[Examples](docs/EXAMPLES.md)** | Real-world examples |
-
----
-
-## 🐛 Troubleshooting
-
-### Gemini API Connection Issues
-
-```bash
-# Verify API key
-echo $GEMINI_API_KEY
-
-# Test connection
-node -e "require('./src/gemini-bridge.js').test()"
-
-# Check API status
-curl https://generativelanguage.googleapis.com/v1beta/info
-```
-
-### Git Push Failures
-
-```bash
-# Verify SSH key
-ssh -T git@github.com
-
-# Test with debug
-GIT_SSH_COMMAND="ssh -vvv" git push origin main
-
-# Resolve conflicts
-git status
-git fetch origin
-git rebase origin/main
-```
-
-### Node Dependencies Issues
-
-```bash
-# Clear cache and reinstall
-rm -rf node_modules package-lock.json
-npm install
-
-# Update dependencies
-npm update
-
-# Verify installation
-npm run test
-```
-
----
-
-*Automating infrastructure. Empowering documentation. Building sovereign systems.*
+*Autonomous by design. Documented by AI. Deployed with confidence.*
